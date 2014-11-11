@@ -45,7 +45,9 @@ int main(int argc, char **argv) {
     // Calculate the optical flow using Lucas-Kanade method
     std::vector<unsigned char> statuses;
     std::vector<float> errors;
-    cv::calcOpticalFlowPyrLK(prevFrame, curFrame, originalPoints, newPoints, statuses, errors);
+    cv::calcOpticalFlowPyrLK(prevFrame, curFrame, originalPoints, newPoints,
+        statuses, errors, cv::Size(15, 15), 2,
+        cv::TermCriteria(cv::TermCriteria::COUNT | cv::TermCriteria::EPS, 10, 0.03));
 
     // Draw arrows from all of the original points to their new locations
     for(int i = 0; i < newPoints.size(); i++) {
