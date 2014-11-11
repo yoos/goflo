@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
 
     // Find the interesting points in the current frame
     std::vector<cv::Point2f> newPoints;
-    cv::goodFeaturesToTrack(curFrame, newPoints, 500, 0.01, 1.0);
+    cv::goodFeaturesToTrack(curFrame, newPoints, 100, 0.3, 7.0);
 
     // Draw the points to the debug frame
     for(auto k : originalPoints) {
