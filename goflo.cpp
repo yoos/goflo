@@ -53,10 +53,12 @@ int main(int argc, char **argv) {
     for(int i = 0; i < newPoints.size(); i++) {
       // std::cout << "Error is " << errors[i] << std::endl;
 
-      cv::Point from(std::round(originalPoints[i].x), std::round(originalPoints[i].y));
-      cv::Point to(std::round(newPoints[i].x), std::round(newPoints[i].y));
+      if(statuses[i] == 1) {
+        cv::Point from(std::round(originalPoints[i].x), std::round(originalPoints[i].y));
+        cv::Point to(std::round(newPoints[i].x), std::round(newPoints[i].y));
 
-      cv::line(drawnFrame, from, to, cv::Scalar(255, 0, 0));
+        cv::line(drawnFrame, from, to, cv::Scalar(255, 0, 0));
+      }
     }
 
     imshow("frame", drawnFrame);
