@@ -4,7 +4,7 @@
 #include <opencv2/opencv.hpp>
 
 int main(int argc, char **argv) {
-  cv::VideoCapture capture(0);
+  cv::VideoCapture capture("video.mp4");
 
   if(!capture.isOpened()) {
     std::cerr << "Failed to open capture device" << std::endl;
@@ -15,6 +15,12 @@ int main(int argc, char **argv) {
 
   // Grab the initial frame
   cv::Mat prevFrame;
+
+  // Skip frames
+  for(int i = 0; i < 1000; i++) {
+    capture >> prevFrame;
+  }
+
   capture >> prevFrame;
   cv::cvtColor(prevFrame, prevFrame, cv::COLOR_BGR2GRAY);
 
@@ -32,8 +38,8 @@ int main(int argc, char **argv) {
     cv::Mat flow;
     cv::calcOpticalFlowFarneback(prevFrame, curFrame, flow, 0.5, 3, 15, 3, 5, 1.2, 0);
 
-    for(int y = 0; y < flow.rows; y += 10) {
-      for(int x = 0; x < flow.cols; x += 10) {
+    for(int y = 0; y < flow.rows; y += 5) {
+      for(int x = 0; x < flow.cols; x += 5) {
         const cv::Point2f& dxdy = flow.at<cv::Point2f>(y, x);
 
         int sumSquare = std::pow(dxdy.x, 2) + std::pow(dxdy.y, 2);
