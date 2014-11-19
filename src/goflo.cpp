@@ -1,10 +1,14 @@
 #include <cstdlib>
-#include <vector>
 
 #include <opencv2/opencv.hpp>
 
+#include "optical_flow_engine.hpp"
+#include "cpu_optical_flow_engine.hpp"
+#include "gpu_optical_flow_engine.hpp"
+
 int main(int argc, char **argv) {
-  cv::VideoCapture capture("video.mp4");
+  // cv::VideoCapture capture("video.mp4");
+  cv::VideoCapture capture(0);
 
   if(!capture.isOpened()) {
     std::cerr << "Failed to open capture device" << std::endl;
@@ -16,13 +20,10 @@ int main(int argc, char **argv) {
   // Grab the initial frame
   cv::Mat prevFrame;
 
-  // Skip frames
-  for(int i = 0; i < 1000; i++) {
-    capture >> prevFrame;
-  }
-
   capture >> prevFrame;
   cv::cvtColor(prevFrame, prevFrame, cv::COLOR_BGR2GRAY);
+
+  GPUOpticalFlowEngine engine;
 
   while(true) {
     // Grab the current frame
@@ -30,13 +31,11 @@ int main(int argc, char **argv) {
     capture >> curFrame;
 
     // Copy the frame to a "debug" image so we don't draw over the original
-    cv::Mat drawnFrame = curFrame.clone();
+    cv::Mat drawnFrame; // = curFrame.clone();
+    drawnFrame = cv::Mat::zeros(curFrame.size(), curFrame.type());
 
-    // Convert the frame to grayscale
-    cv::cvtColor(curFrame, curFrame, cv::COLOR_BGR2GRAY);
-
-    cv::Mat flow;
-    cv::calcOpticalFlowFarneback(prevFrame, curFrame, flow, 0.5, 3, 15, 3, 5, 1.2, 0);
+    engine.prepareFrame(curFrame);
+    cv::Mat flow = engine.process(prevFrame, curFrame);
 
     for(int y = 0; y < flow.rows; y += 5) {
       for(int x = 0; x < flow.cols; x += 5) {
