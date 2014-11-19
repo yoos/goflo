@@ -9,8 +9,27 @@
 #include "cpu_optical_flow_engine.hpp"
 #include "gpu_optical_flow_engine.hpp"
 
+void usage() {
+  std::cerr << "Usage: goflo --cpu|--gpu" << std::endl;
+}
+
 int main(int argc, char **argv) {
-  // cv::VideoCapture capture("video.mp4");
+  if(argc < 2) {
+    usage();
+    return EXIT_FAILURE;
+  }
+
+  std::unique_ptr<OpticalFlowEngine> engine;
+  if(strcmp(argv[1], "--cpu") == 0) {
+    engine = std::make_unique<CPUOpticalFlowEngine>();
+  } else if(strcmp(argv[1], "--gpu") == 0) {
+    engine = std::make_unique<GPUOpticalFlowEngine>();
+  } else {
+    usage();
+    return EXIT_FAILURE;
+  }
+
+  Benchmarker benchmarker(std::move(engine));
   cv::VideoCapture capture(0);
 
   if(!capture.isOpened()) {
@@ -26,9 +45,6 @@ int main(int argc, char **argv) {
   capture >> prevFrame;
   cv::cvtColor(prevFrame, prevFrame, cv::COLOR_BGR2GRAY);
 
-  auto engine = std::make_unique<CPUOpticalFlowEngine>();
-  Benchmarker benchmarker(std::move(engine));
-
   while(true) {
     // Grab the current frame
     cv::Mat curFrame;
@@ -38,8 +54,6 @@ int main(int argc, char **argv) {
     cv::Mat drawnFrame; // = curFrame.clone();
     drawnFrame = cv::Mat::zeros(curFrame.size(), curFrame.type());
 
-    // engine->prepareFrame(curFrame);
-    // cv::Mat flow = engine->process(prevFrame, curFrame);
     auto pair = benchmarker.benchFrame(prevFrame, curFrame);
     auto duration = pair.first;
     auto flow = pair.second;
