@@ -1,7 +1,10 @@
 #include <cstdlib>
+#include <chrono>
+#include <memory>
 
 #include <opencv2/opencv.hpp>
 
+#include "benchmarker.hpp"
 #include "optical_flow_engine.hpp"
 #include "cpu_optical_flow_engine.hpp"
 #include "gpu_optical_flow_engine.hpp"
@@ -23,7 +26,8 @@ int main(int argc, char **argv) {
   capture >> prevFrame;
   cv::cvtColor(prevFrame, prevFrame, cv::COLOR_BGR2GRAY);
 
-  GPUOpticalFlowEngine engine;
+  auto engine = std::make_unique<CPUOpticalFlowEngine>();
+  Benchmarker benchmarker(std::move(engine));
 
   while(true) {
     // Grab the current frame
@@ -34,8 +38,13 @@ int main(int argc, char **argv) {
     cv::Mat drawnFrame; // = curFrame.clone();
     drawnFrame = cv::Mat::zeros(curFrame.size(), curFrame.type());
 
-    engine.prepareFrame(curFrame);
-    cv::Mat flow = engine.process(prevFrame, curFrame);
+    // engine->prepareFrame(curFrame);
+    // cv::Mat flow = engine->process(prevFrame, curFrame);
+    auto pair = benchmarker.benchFrame(prevFrame, curFrame);
+    auto duration = pair.first;
+    auto flow = pair.second;
+
+    std::cout << "Frame completed in " << duration.count() << "ms." << std::endl;
 
     for(int y = 0; y < flow.rows; y += 5) {
       for(int x = 0; x < flow.cols; x += 5) {

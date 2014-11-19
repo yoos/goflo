@@ -1,7 +1,7 @@
 CXX=clang++
 RM=rm -f
 
-CXXFLAGS=-Wall -Wextra -std=c++11 -Isrc/ -O2 -g
+CXXFLAGS=-Wall -Wextra -std=c++14 -Isrc/ -O2 -g
 LDFLAGS=$(shell pkg-config opencv --libs --cflags)
 
 SRCS=$(shell find src/ -type f -name '*.cpp')
