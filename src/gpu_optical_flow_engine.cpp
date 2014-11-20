@@ -1,11 +1,8 @@
 #include "gpu_optical_flow_engine.hpp"
 
 cv::Mat GPUOpticalFlowEngine::process(cv::Mat& prevFrame, cv::Mat& nextFrame) {
-  cv::gpu::GpuMat gpuPrevFrame;
-  cv::gpu::GpuMat gpuNextFrame;
-
-  gpuPrevFrame.upload(prevFrame);
-  gpuNextFrame.upload(nextFrame);
+  cv::gpu::GpuMat gpuPrevFrame(prevFrame);
+  cv::gpu::GpuMat gpuNextFrame(nextFrame);
 
   cv::gpu::GpuMat gpuFlowX;
   cv::gpu::GpuMat gpuFlowY;
