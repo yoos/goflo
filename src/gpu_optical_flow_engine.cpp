@@ -1,13 +1,13 @@
 #include "gpu_optical_flow_engine.hpp"
 
 cv::Mat GPUOpticalFlowEngine::process(cv::Mat& prevFrame, cv::Mat& nextFrame) {
-  cv::gpu::GpuMat gpuPrevFrame(prevFrame);
-  cv::gpu::GpuMat gpuNextFrame(nextFrame);
+  cv::ocl::oclMat gpuPrevFrame(prevFrame);
+  cv::ocl::oclMat gpuNextFrame(nextFrame);
 
-  cv::gpu::GpuMat gpuFlowX;
-  cv::gpu::GpuMat gpuFlowY;
+  cv::ocl::oclMat gpuFlowX;
+  cv::ocl::oclMat gpuFlowY;
 
-  cv::gpu::FarnebackOpticalFlow opticalFlow;
+  cv::ocl::FarnebackOpticalFlow opticalFlow;
   
   opticalFlow(gpuPrevFrame, gpuNextFrame, gpuFlowX, gpuFlowY);
 
