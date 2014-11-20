@@ -6,8 +6,6 @@ cv::Mat GPUOpticalFlowEngine::process(cv::Mat& prevFrame, cv::Mat& nextFrame) {
 
   cv::gpu::GpuMat gpuFlowX;
   cv::gpu::GpuMat gpuFlowY;
-
-  cv::gpu::FarnebackOpticalFlow opticalFlow;
   
   opticalFlow(gpuPrevFrame, gpuNextFrame, gpuFlowX, gpuFlowY);
 
