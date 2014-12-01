@@ -4,11 +4,12 @@ Benchmarker::Benchmarker(std::unique_ptr<OpticalFlowEngine> engine)
   : engine(std::move(engine)) {
 }
 
-std::pair<std::chrono::milliseconds, cv::Mat> Benchmarker::benchFrame(cv::Mat& prevFrame, cv::Mat &nextFrame) {
+std::pair<std::chrono::milliseconds, std::vector<cv::Mat>> Benchmarker::benchFrame(cv::Mat& prevFrame, cv::Mat &nextFrame) {
   auto start = std::chrono::system_clock::now();
 
   engine->prepareFrame(nextFrame);
-  cv::Mat flow = engine->process(prevFrame, nextFrame);
+  std::vector<cv::Mat> flow;
+  flow = engine->process(prevFrame, nextFrame);
 
   auto end = std::chrono::system_clock::now();
   auto elapsed = end - start;

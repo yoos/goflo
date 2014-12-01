@@ -7,7 +7,7 @@
 
 class GPUOpticalFlowEngine : public OpticalFlowEngine {
 public:
-  virtual cv::Mat process(cv::Mat& prevFrame, cv::Mat& nextFrame);
+  virtual std::vector<cv::Mat> process(cv::Mat& prevFrame, cv::Mat& nextFrame);
 
 private:
   cv::gpu::FarnebackOpticalFlow opticalFlow;

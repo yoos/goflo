@@ -1,6 +1,6 @@
 #include "gpu_optical_flow_engine.hpp"
 
-cv::Mat GPUOpticalFlowEngine::process(cv::Mat& prevFrame, cv::Mat& nextFrame) {
+std::vector<cv::Mat> GPUOpticalFlowEngine::process(cv::Mat& prevFrame, cv::Mat& nextFrame) {
   cv::gpu::GpuMat gpuPrevFrame(prevFrame);
   cv::gpu::GpuMat gpuNextFrame(nextFrame);
 
@@ -9,8 +9,9 @@ cv::Mat GPUOpticalFlowEngine::process(cv::Mat& prevFrame, cv::Mat& nextFrame) {
   
   opticalFlow(gpuPrevFrame, gpuNextFrame, gpuFlowX, gpuFlowY);
 
-  cv::Mat flow;
-  gpuFlowX.download(flow); // TODO(kyle): Use both X and Y directions
+  std::vector<cv::Mat> flow;
+  gpuFlowX.download(flow[0]); // TODO(kyle): Use both X and Y directions
+  gpuFlowY.download(flow[1]);
 
   return flow;
 }

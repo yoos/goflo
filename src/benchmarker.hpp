@@ -9,7 +9,7 @@
 class Benchmarker {
 public:
   Benchmarker(std::unique_ptr<OpticalFlowEngine> engine);
-  std::pair<std::chrono::milliseconds, cv::Mat> benchFrame(cv::Mat& prevFrame, cv::Mat &nextFrame);
+  std::pair<std::chrono::milliseconds, std::vector<cv::Mat>> benchFrame(cv::Mat& prevFrame, cv::Mat &nextFrame);
 
 private:
   std::unique_ptr<OpticalFlowEngine> engine;
