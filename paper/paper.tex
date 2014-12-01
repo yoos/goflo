@@ -1,5 +1,8 @@
 \documentclass{article}
 
+\usepackage{float}
+\usepackage{graphicx}
+
 \title{Performance Analysis of GPU-Accelerated Optical Flow}
 \date{December 8, 2014}
 \author{Hari Caushik, Kyle Cesare, Soo-Hyun Yoo}
@@ -34,6 +37,18 @@ variables will be:
 \end{description}
 
 \section{Results}
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.8\textwidth]{test_resolution.png}
+  \caption{Processing time per frame at various resolutions.}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.8\textwidth]{test_flow.png}
+  \caption{Processing time per frame for various magnitudes of motion.}
+\end{figure}
 
 \section{Conclusion}
 
