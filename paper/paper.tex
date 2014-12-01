@@ -36,6 +36,10 @@ variables will be:
   \item[Flow magnitude] ?
 \end{description}
 
+It is important to note that the processing times for the first few frames will
+be discarded to remove any caching oddities and to allow the GPU kernels to
+finish load.
+
 \section{Results}
 
 \begin{figure}[H]
@@ -49,6 +53,16 @@ variables will be:
     \includegraphics[width=0.8\textwidth]{test_flow.png}
   \caption{Processing time per frame for various magnitudes of motion.}
 \end{figure}
+
+\section{Implementation Analysis}
+To provide more insight into why the GPU showed better performance results than
+the CPU, we will now break down the OpenCV Farneback optical flow implementation
+used in the trials. We use the \texttt{objdump} tool to disassemble the OpenCV
+shared library into an x86 assembly representation. We then use this assembly
+code to gather information on the types and counts of instructions being run.
+
+The heavy use of Streaming SIMD Extensions (SSE) makes it more difficult to
+reason about the number of floating point operations being performed.
 
 \section{Conclusion}
 
