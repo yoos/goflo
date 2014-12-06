@@ -160,7 +160,9 @@ $$
 $$
 
 For a 1920x1080 image $\text{levels}=5$ and $\text{poly\_n}=5$, this results in
-1,005,696,000 floating point operations per frame.
+1,005,696,000 floating point operations per frame. On top of this is several
+Gaussian blur operations, several image resizes, and lots of memory access and
+allocation.
 
 \section{Conclusion}
 TODO
