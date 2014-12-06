@@ -118,7 +118,10 @@ variables will be:
     to copy memory between the CPU and GPU may be larger than the actual
     processing time. We will use video at QVGA (320x240), VGA (640x480) and FHD
     (1920x1080) to see if this effect is significant.
-  \item[Flow magnitude] ?
+  \item[Block size] The block size determines the area over which a polynomial
+    estimation will be fitted. For a larger block size, fewer polynomials need
+    to be computed but each polynomial is more difficult to compute. We want to
+    see what this relationship looks like.
 \end{description}
 
 It is important to note that the processing times for the first few frames will
@@ -127,16 +130,22 @@ finish load.
 
 \section{Results}
 
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=0.8\textwidth]{test_resolution.png}
-  \caption{Processing time per frame at various resolutions.}
-\end{figure}
+First, we tested the CPU and GPU implementations on various input resolutions.
+% TODO(kyle): Summarize results
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=0.8\textwidth]{test_flow.png}
-  \caption{Processing time per frame for various magnitudes of motion.}
+    \includegraphics[width=0.8\textwidth]{resolution.png}
+  \caption{Processing time per frame at various resolutions.}
+\end{figure}
+
+We then compared the two implementations for various block sizes.
+% TODO(kyle): Summarize results
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.8\textwidth]{block_size.png}
+  \caption{Processing time per frame for various block sizes.}
 \end{figure}
 
 \section{Implementation Analysis}
