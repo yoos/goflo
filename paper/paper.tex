@@ -149,6 +149,19 @@ code to gather information on the types and counts of instructions being run.
 The heavy use of Streaming SIMD Extensions (SSE) makes it more difficult to
 reason about the number of floating point operations being performed.
 
+The heart of the OpenCV Farneback optical flow implementation is the
+\texttt{FarnebackPolyExp} function. While there are other operations that
+execute floating point operations, this function is the most expensive. The
+number of floating point operations in the core loop is given by:
+
+$$
+\text{FP Operations} = \text{levels} * \text{img\_width} * \text{img\_height}
+                * (12 + \text{poly\_n} * 17)
+$$
+
+For a 1920x1080 image $\text{levels}=5$ and $\text{poly\_n}=5$, this results in
+1,005,696,000 floating point operations per frame.
+
 \section{Conclusion}
 TODO
 
