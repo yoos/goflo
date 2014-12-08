@@ -164,6 +164,13 @@ code to gather information on the types and counts of instructions being run.
 The heavy use of Streaming SIMD Extensions (SSE) makes it more difficult to
 reason about the number of floating point operations being performed.
 
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.8\textwidth]{simd.jpg}
+    \caption{Illustration of single instruction, multiple data
+      (SIMD)~\cite{simd}.}
+\end{figure}
+
 The heart of the OpenCV Farneback optical flow implementation is the
 \texttt{FarnebackPolyExp} function. While there are other operations that
 execute floating point operations, this function is the most expensive. The
@@ -196,5 +203,7 @@ TODO
     wwww.dgp.toronto.edu/~donovan/stabilization/opticalflow.pdf
   \bibitem{farneback}
     Two-Frame Motion Estimation Based on Polynomial Expansion
+  \bibitem{simd}
+    https://www.kernel.org/pub/linux/kernel/people/geoff/cell/ps3-linux-docs/CellProgrammingTutorial/BasicsOfSIMDProgramming.html
 \end{thebibliography}
 \end{document}
