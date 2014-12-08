@@ -216,7 +216,19 @@ from about 5 to 21. This could be explained by the fact that a smaller block
 size means more polyfit calculations that can be computed independently
 of the other blocks. The GPU is able to take more advantage of parallelism in
 this case while for larger block sizes, there are less polyfit calculations to 
-compute and thus less computation that can be executed in parallel.
+compute and thus less computation that can be executed in parallel. In the case
+of the CPU, the size of the block and the number of polyfit computations 
+seemed to even out and did not show a significant difference across multiple 
+block sizes. 
+
+Another interesting result is the variance of the processing times at each 
+block size. The CPU processing times varied by about 20 ms across iterations at
+each block size while for the GPU, the variance was about 10 ms. This can be
+explained by the context switches executed by the Operating System (OS) running
+on the CPU. 
+
+
+
 
 \begin{thebibliography}{10}
   \bibitem{gpuoverview}
