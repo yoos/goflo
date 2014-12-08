@@ -180,13 +180,15 @@ shared library into an x86 assembly representation. We then use this assembly
 code to gather information on the types and counts of instructions being run.
 
 The heavy use of Streaming SIMD Extensions (SSE) makes it more difficult to
-reason about the number of floating point operations being performed.
+reason about the number of floating point operations being performed. An example
+of how SIMD executes a single instruction on an array of data is shown in
+Figure~\ref{fig:simd}.
 
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.8\textwidth]{img/simd.jpg}
-    \caption{Illustration of single instruction, multiple data
-      (SIMD)~\cite{simd}.}
+  \caption{Illustration of single instruction, multiple data (SIMD)~\cite{simd}.}
+  \label{fig:simd}
 \end{figure}
 
 The heart of the OpenCV Farneback optical flow implementation is the
@@ -199,7 +201,7 @@ $$
                 * (12 + \text{poly\_n} * 17)
 $$
 
-For a 1920x1080 image $\text{levels}=5$ and $\text{poly\_n}=5$, this results in
+For a 1920x1080 image with $\text{levels}=5$ and $\text{poly\_n}=5$, this results in
 1,005,696,000 floating point operations per frame. On top of this is several
 Gaussian blur operations, several image resizes, and lots of memory access and
 allocation.
