@@ -205,7 +205,16 @@ Gaussian blur operations, several image resizes, and lots of memory access and
 allocation.
 
 \section{Conclusion}
-TODO
+Overall, the GPU performed better for all the different image resolutions and
+block sizes. The GPU performed about 2x faster for all different resolutions.
+It was interesting to note that the CPU processing times for varying block 
+sizes remained steady at about 220 ms while the GPU processing times 
+increased steadily from about 50 ms to 150 ms when increasing the block size
+from about 5 to 21. This could be explained by the fact that a smaller block 
+size means more polyfit calculations that can be computed independently
+of the other blocks. The GPU is able to take more advantage of parallelism in
+this case while for larger block sizes, there are less polyfit calculations to 
+compute and thus less computation that can be executed in parallel.
 
 \begin{thebibliography}{10}
   \bibitem{gpuoverview}
