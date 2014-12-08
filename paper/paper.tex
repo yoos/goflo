@@ -228,8 +228,26 @@ each block size while for the GPU, the variance was about 10 ms. This can be
 explained by the context switches executed by the Operating System (OS) running
 on the CPU. 
 
+The GPU computations contain outliers in figures 4 and 6. Note that the loading
+times are constant at about 400 ms for each resolution in figure 4. This is due
+to the GPU kernel loading time, the time it takes to copy the kernels, or the
+functions to be run on the GPU, to GPU memory. For each frame that the GPU 
+optical flow algorithm must process, it must 
+\begin{enumerate}
+    \item Load the kernels from CPU memory to GPU memory
+    \item Transfer the images from CPU to GPU
+    \item Perform the optical flow
+\end{enumerate}
+Since the optical flow kernel is same for each optical flow calculation, the
+loading time is constant. The load only needs to be performed for the first 
+first frame processed. The GPU only performs steps 2 and 3 for subsequent 
+frames.
 
-
+Not surprisingly, the GPU outperformed the CPU for optical flow computations at
+varying image resolutions and block sizes. To extend the work presented in this
+paper, it would be interesting to investigate a larger range of block sizes and
+image resolutions as well as more CPU and GPU platforms. It may also be useful
+to compare performance differneces for different optical flow algorithms. 
 
 \begin{thebibliography}{10}
   \bibitem{gpuoverview}
