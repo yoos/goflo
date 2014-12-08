@@ -97,8 +97,8 @@ implement this program.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{img/sys.png}
-  \label{fig:sys}
   \caption{Test setup with Jetson devboard processing video stream as input and producing optical flow estimate as output.}
+  \label{fig:sys}
 \end{figure}
 
 \section{Hardware}
@@ -108,13 +108,14 @@ and a quad-core ARM Cortex-A15 processor.
 
 \section{Testing Methodology}
 To test the criteria outlined above, we will create two programs to produce
-identical outputs, but one will target a CPU and the other a GPU.
+identical outputs, but one will target a CPU and the other a GPU. An example of
+the program's output is provided in Figure~\ref{fig:flow}.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.8\textwidth]{img/flow.png}
-  \label{fig:flow}
   \caption{An example output image of our testing program.}
+  \label{fig:flow}
 \end{figure}
 
 To try to identify strengths and weaknesses of each target, we will attempt to
@@ -144,8 +145,15 @@ First, we tested the CPU and GPU implementations on various input resolutions.
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{img/cpu_resolution.png}
-  \label{fig:cpures}
   \caption{CPU processing time per frame in milliseconds at various resolutions.}
+  \label{fig:cpures}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.8\textwidth]{img/gpu_resolution.png}
+  \caption{GPU processing time per frame in milliseconds at various resolutions.}
+  \label{fig:gpures}
 \end{figure}
 
 We then compared the two implementations for various block sizes.
@@ -154,22 +162,15 @@ We then compared the two implementations for various block sizes.
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{img/cpu_blocksize.png}
-  \label{fig:cpublock}
   \caption{CPU processing time per frame in milliseconds at various block sizes.}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=0.8\textwidth]{img/gpu_resolution.png}
-  \label{fig:gpures}
-  \caption{GPU processing time per frame in milliseconds at various resolutions.}
+  \label{fig:cpublock}
 \end{figure}
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{img/gpu_blocksize.png}
-  \label{fig:gpublock}
   \caption{GPU processing time per frame in milliseconds at various block sizes.}
+  \label{fig:gpublock}
 \end{figure}
 
 \section{Implementation Analysis}
