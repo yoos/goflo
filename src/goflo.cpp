@@ -63,10 +63,16 @@ int main(int argc, char **argv) {
     for(int y = 0; y < flow[0].rows; y += 5) {
       for(int x = 0; x < flow[0].cols; x += 5) {
         //const cv::Point2f& dxdy = flow.at<cv::Point2f>(y, x);
-	const cv::Point2f dxdy(flow[1](y,x), flow[0](y,x));
-        int sumSquare = std::pow(dxdy.x, 2) + std::pow(dxdy.y, 2);
+
+        const cv::Point2f p1 = flow[0].at<cv::Point2f>(y, x);
+        const cv::Point2f p2 = flow[1].at<cv::Point2f>(y, x);
+        int sumSquare = std::pow((p2.x-p1.x), 2) + std::pow((p2.y-p1.y), 2);
+        cv::line(drawnFrame, cv::Point(x, y), cv::Point(x+p1.x, y+p1.y), cv::Scalar(255, 0, 0));   // TODO(yoos): This doesn't draw correctly.
+
+        //const cv::Point2f dxdy(flow[1](y,x), flow[0](y,x));
+        //int sumSquare = std::pow(dxdy.x, 2) + std::pow(dxdy.y, 2);
         // cv::circle(drawnFrame, cv::Point(x, y), std::sqrt(sumSquare) / 2, cv::Scalar(0, 0, sumSquare, 100), -1);
-        cv::line(drawnFrame, cv::Point(x, y), cv::Point(x + dxdy.x, y + dxdy.y), cv::Scalar(255, 0, 0));
+        //cv::line(drawnFrame, cv::Point(x, y), cv::Point(x + dxdy.x, y + dxdy.y), cv::Scalar(255, 0, 0));
       }
     }
 

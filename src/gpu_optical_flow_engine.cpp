@@ -9,7 +9,7 @@ std::vector<cv::Mat> GPUOpticalFlowEngine::process(cv::Mat& prevFrame, cv::Mat& 
   
   opticalFlow(gpuPrevFrame, gpuNextFrame, gpuFlowX, gpuFlowY);
 
-  std::vector<cv::Mat> flow;
+  std::vector<cv::Mat> flow(2);
   gpuFlowX.download(flow[0]); // TODO(kyle): Use both X and Y directions
   gpuFlowY.download(flow[1]);
 
