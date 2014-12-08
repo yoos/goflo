@@ -96,7 +96,7 @@ implement this program.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{sys.png}
+  \includegraphics[width=0.8\textwidth]{img/sys.png}
   \label{fig:sys}
   \caption{Test setup with Jetson devboard processing video stream as input and producing optical flow estimate as output.}
 \end{figure}
@@ -112,7 +112,7 @@ identical outputs, but one will target a CPU and the other a GPU.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.8\textwidth]{flow.png}
+  \includegraphics[width=0.8\textwidth]{img/flow.png}
   \label{fig:flow}
   \caption{An example output image of our testing program.}
 \end{figure}
@@ -143,7 +143,7 @@ First, we tested the CPU and GPU implementations on various input resolutions.
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=0.8\textwidth]{cpu_resolution.png}
+    \includegraphics[width=0.8\textwidth]{img/cpu_resolution.png}
   \label{fig:cpures}
   \caption{CPU processing time per frame in milliseconds at various resolutions.}
 \end{figure}
@@ -153,21 +153,21 @@ We then compared the two implementations for various block sizes.
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=0.8\textwidth]{cpu_blocksize.png}
+    \includegraphics[width=0.8\textwidth]{img/cpu_blocksize.png}
   \label{fig:cpublock}
   \caption{CPU processing time per frame in milliseconds at various block sizes.}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=0.8\textwidth]{gpu_resolution.png}
+    \includegraphics[width=0.8\textwidth]{img/gpu_resolution.png}
   \label{fig:gpures}
   \caption{GPU processing time per frame in milliseconds at various resolutions.}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=0.8\textwidth]{gpu_blocksize.png}
+    \includegraphics[width=0.8\textwidth]{img/gpu_blocksize.png}
   \label{fig:gpublock}
   \caption{GPU processing time per frame in milliseconds at various block sizes.}
 \end{figure}
@@ -184,7 +184,7 @@ reason about the number of floating point operations being performed.
 
 \begin{figure}[h]
   \centering
-    \includegraphics[width=0.8\textwidth]{simd.jpg}
+    \includegraphics[width=0.8\textwidth]{img/simd.jpg}
     \caption{Illustration of single instruction, multiple data
       (SIMD)~\cite{simd}.}
 \end{figure}
