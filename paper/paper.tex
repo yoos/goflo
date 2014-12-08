@@ -70,7 +70,7 @@ orders of magnitude faster on a GPU than on a CPU, as it can process more arrays
 of pixels simultaneously.
 
 \section{Optical Flow}
-Optical flow is a problem within the field of Computer Vision concerned with
+Optical flow is a problem within the field of computer vision concerned with
 detecting motion by finding and tracking features or segments across different
 images~\cite{opticalflowtechniques}. Specifically, this involves measuring the
 motion of specific pixel brightness patterns in a sequence of
@@ -82,16 +82,16 @@ drift on the order of meters per second due to sensor noise, external
 perturbations, or control inputs.  A typical system setup is shown in
 Figure~\ref{fig:sys}.
 
-Optical flow can be sparse or dense. Sparse Optical Flow is the tracking of
-a few select pixels in a set of images. Dense Optical Flow is the tracking of
+Optical flow can be sparse or dense. Sparse optical flow is the tracking of
+a few select pixels in a set of images. Dense optical flow is the tracking of
 all pixels in a set of images, a much more computationally intensive task.
 
 In this project, we use the Farneback Dense Optical Flow Algorithm, which
-computes a polynomial expansion for a neighborhood of pixels and from that
-polynomial approximation, computes displacement (or motion) fields using linear
-algebra\cite{farneback}. Since the motion fields depend on the size of the
-neighborhood, changing this parameter will produce different motion fields and
-will probably have an effect on the performance of the flow computation.
+computes a polynomial expansion for a neighborhood of pixels. From that
+polynomial approximation, it computes displacement (or motion) fields using
+linear algebra~\cite{farneback}. Since the motion fields depend on the size of
+the neighborhood, changing this parameter will produce different motion fields
+and will probably have an effect on the performance of the flow computation.
 
 We will specifically measure the number of frames processed per second using
 both platforms. We use OpenCV and its GPU acceleration compiler option to
@@ -100,15 +100,15 @@ implement this program.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{img/sys.png}
-  \caption{Typical setup with GPU processing video stream as input and producing optical flow estimate as output.}
+  \caption{Typical setup with GPU processing video stream as input producing optical flow estimate as output.}
   \label{fig:sys}
 \end{figure}
 
 \section{Hardware}
-The Intel CPU and Nvidia GPU used in this project are both part of a U500VZ
-laptop. The Intel Core i7-3612QM is a quad-core processor built on the 22 nm
-Ivy Bridge architecture. The Nvidia GeForce GT 650M is a 28 nm Kepler-based GPU
-with 384 CUDA cores.
+The Intel CPU and Nvidia GPU used in this project are both part of an ASUS
+U500VZ laptop. The Intel Core i7-3612QM is a quad-core processor built on the 22
+nm Ivy Bridge architecture. The Nvidia GeForce GT 650M is a 28 nm Kepler-based
+GPU with 384 CUDA cores.
 
 \section{Testing Methodology}
 To test the criteria outlined above, we create two programs to produce
