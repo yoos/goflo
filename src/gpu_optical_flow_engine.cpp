@@ -1,6 +1,11 @@
 #include "gpu_optical_flow_engine.hpp"
 
+GPUOpticalFlowEngine::GPUOpticalFlowEngine(int winsize) : OpticalFlowEngine(winsize) {
+}
+
 std::vector<cv::Mat> GPUOpticalFlowEngine::process(cv::Mat& prevFrame, cv::Mat& nextFrame) {
+  opticalFlow.winSize = winsize;
+
   cv::gpu::GpuMat gpuPrevFrame(prevFrame);
   cv::gpu::GpuMat gpuNextFrame(nextFrame);
 

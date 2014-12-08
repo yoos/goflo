@@ -6,5 +6,7 @@
 
 class CPUOpticalFlowEngine : public OpticalFlowEngine {
 public:
+  CPUOpticalFlowEngine(int winsize);
+
   virtual std::vector<cv::Mat> process(cv::Mat& prevFrame, cv::Mat& nextFrame);
 };

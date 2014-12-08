@@ -7,6 +7,8 @@
 
 class GPUOpticalFlowEngine : public OpticalFlowEngine {
 public:
+  GPUOpticalFlowEngine(int winsize);
+
   virtual std::vector<cv::Mat> process(cv::Mat& prevFrame, cv::Mat& nextFrame);
 
 private:

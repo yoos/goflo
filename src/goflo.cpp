@@ -10,20 +10,22 @@
 #include "gpu_optical_flow_engine.hpp"
 
 void usage() {
-  std::cerr << "Usage: goflo --cpu|--gpu" << std::endl;
+  std::cerr << "Usage: goflo --cpu|--gpu <winsize>" << std::endl;
 }
 
 int main(int argc, char **argv) {
-  if(argc < 2) {
+  if(argc < 3) {
     usage();
     return EXIT_FAILURE;
   }
 
+  int winsize = atoi(argv[2]);
+
   std::unique_ptr<OpticalFlowEngine> engine;
   if(strcmp(argv[1], "--cpu") == 0) {
-    engine = std::make_unique<CPUOpticalFlowEngine>();
+    engine = std::make_unique<CPUOpticalFlowEngine>(winsize);
   } else if(strcmp(argv[1], "--gpu") == 0) {
-    engine = std::make_unique<GPUOpticalFlowEngine>();
+    engine = std::make_unique<GPUOpticalFlowEngine>(winsize);
   } else {
     usage();
     return EXIT_FAILURE;
