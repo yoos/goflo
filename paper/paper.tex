@@ -51,56 +51,36 @@
 
 \section{Abstract}
 GPUs, or graphical processing units, have been shown to provide a significant
-<<<<<<< HEAD
 performance boost over CPUs for highly parallel tasks\cite{gpupipeline}. This
 project investigates the performance difference between optical flow algorithms
-run on an Intel Core i5 quad core CPU and those run on an NVIDIA Tegra K1 SoC.
-We expected the K1 to run these optical flow algorithms significantly faster due
-to its ability to parallelize with its GPU. We expect to test the performance
-on the Farneback dense optical flow algorithm. This algorithm will process
-video frames captured by a GoPro webcam with a USB interface. The performance
-metric we will be measuring is frame processing rate.
-=======
-performance boost over CPUs for highly parallel tasks. This project
-investigates the performance difference between optical flow algorithms run on
-an Intel Core i7 quad-core CPU and those run on an Nvidia GeForce GT 650M
+run on an Intel Core i7 quad-core CPU and those run on an Nvidia GeForce GT 650M
 mobile GPU. We expected the GPU to run these optical flow algorithms
 significantly faster due to its ability to parallelize the algorithm. We test
 the performance on the Farneback dense optical flow algorithm. This algorithm
-processes video frames from a video file on disk. The performance metric we
-will be measuring is frame processing rate.
->>>>>>> 6ee927645a04c56a211357c83cc50b988d79ae63
+processes video frames from a video file on disk. The performance metric we will
+be measuring is frame processing rate.
 
 \section{Graphical Processing Units (GPUs)}
 GPUs have been used to improve the performance of a variety of different
 applications. While CPUs consist of a few powerful cores optimized for serial
 processing, GPUs have a massively parallel architecture consisting of many
 smaller, more efficient cores designed for handling multiple tasks
-simultaneously\cite{gpuoverview}. We expect the optical flow program to run many
+simultaneously~\cite{gpuoverview}. We expect the optical flow program to run many
 orders of magnitude faster on a GPU than on a CPU, as it can process more arrays
 of pixels simultaneously.
 
 \section{Optical Flow}
 Optical flow is a problem within the field of Computer Vision concerned with
 detecting motion by finding and tracking features or segments across different
-<<<<<<< HEAD
-images\cite{opticalflowtechniques}. Specifically, this involves measuring the
-motion of specific pixel brightness patterns in a sequence of images
-\cite{opticalflowtechniques}. Optical flow has many applications
-in 3D vision tasks like obstacle avoidance and time-to-collision calculations
-\cite{opticalflowgpu}. Performing such calculations at high speed is especially
-useful in dynamic systems such as aerial vehicles, which can drift on the order
-of meters per second due to sensor noise, external perturbations, or control
-inputs.
-=======
-images. Specifically, this involves measuring the motion of specific pixel
-brightness patterns in a sequence of images. Optical flow has many applications
-in 3D vision tasks like obstacle avoidance and time-to-collision calculations.
-Performing such calculations at high speed is especially useful in dynamic
-systems such as aerial vehicles, which can drift on the order of meters per
-second due to sensor noise, external perturbations, or control inputs.
-A typical system setup is shown in Figure~\ref{fig:sys}.
->>>>>>> 6ee927645a04c56a211357c83cc50b988d79ae63
+images~\cite{opticalflowtechniques}. Specifically, this involves measuring the
+motion of specific pixel brightness patterns in a sequence of
+images~\cite{opticalflowtechniques}. Optical flow has many applications in 3D
+vision tasks like obstacle avoidance and time-to-collision
+calculations~\cite{opticalflowtechniques}.  Performing such calculations at high
+speed is especially useful in dynamic systems such as aerial vehicles, which can
+drift on the order of meters per second due to sensor noise, external
+perturbations, or control inputs.  A typical system setup is shown in
+Figure~\ref{fig:sys}.
 
 Optical flow can be sparse or dense. Sparse Optical Flow is the tracking of
 a few select pixels in a set of images. Dense Optical Flow is the tracking of
