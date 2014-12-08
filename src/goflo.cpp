@@ -24,8 +24,10 @@ int main(int argc, char **argv) {
   std::unique_ptr<OpticalFlowEngine> engine;
   if(strcmp(argv[1], "--cpu") == 0) {
     engine = std::make_unique<CPUOpticalFlowEngine>(winsize);
+    std::cout << "CPU blocksize " << winsize << ": ";
   } else if(strcmp(argv[1], "--gpu") == 0) {
     engine = std::make_unique<GPUOpticalFlowEngine>(winsize);
+    std::cout << "GPU blocksize " << winsize << ": ";
   } else {
     usage();
     return EXIT_FAILURE;
@@ -47,7 +49,7 @@ int main(int argc, char **argv) {
   capture >> prevFrame;
   cv::cvtColor(prevFrame, prevFrame, cv::COLOR_BGR2GRAY);
 
-  while(true) {
+  for (int loop=0; loop<50; loop++) {
     // Grab the current frame
     cv::Mat curFrame;
     capture >> curFrame;
@@ -60,7 +62,8 @@ int main(int argc, char **argv) {
     auto duration = pair.first;
     auto flow = pair.second;
 
-    std::cout << "Frame completed in " << duration.count() << "ms." << std::endl;
+    //std::cout << "Frame completed in " << duration.count() << "ms." << std::endl;
+    std::cout << duration.count() << ", ";
 
     for(int y = 0; y < flow[0].rows; y += 5) {
       for(int x = 0; x < flow[0].cols; x += 5) {
@@ -86,6 +89,8 @@ int main(int argc, char **argv) {
     // Current frame is now the previous frame
     prevFrame = curFrame;
   }
+
+  std::cout << std::endl;
 
   return EXIT_SUCCESS;
 }
