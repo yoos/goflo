@@ -51,6 +51,7 @@
 
 \section{Abstract}
 GPUs, or graphical processing units, have been shown to provide a significant
+<<<<<<< HEAD
 performance boost over CPUs for highly parallel tasks\cite{gpupipeline}. This
 project investigates the performance difference between optical flow algorithms
 run on an Intel Core i5 quad core CPU and those run on an NVIDIA Tegra K1 SoC.
@@ -59,6 +60,16 @@ to its ability to parallelize with its GPU. We expect to test the performance
 on the Farneback dense optical flow algorithm. This algorithm will process
 video frames captured by a GoPro webcam with a USB interface. The performance
 metric we will be measuring is frame processing rate.
+=======
+performance boost over CPUs for highly parallel tasks. This project
+investigates the performance difference between optical flow algorithms run on
+an Intel Core i7 quad-core CPU and those run on an Nvidia GeForce GT 650M
+mobile GPU. We expected the GPU to run these optical flow algorithms
+significantly faster due to its ability to parallelize the algorithm. We test
+the performance on the Farneback dense optical flow algorithm. This algorithm
+processes video frames from a video file on disk. The performance metric we
+will be measuring is frame processing rate.
+>>>>>>> 6ee927645a04c56a211357c83cc50b988d79ae63
 
 \section{Graphical Processing Units (GPUs)}
 GPUs have been used to improve the performance of a variety of different
@@ -72,6 +83,7 @@ of pixels simultaneously.
 \section{Optical Flow}
 Optical flow is a problem within the field of Computer Vision concerned with
 detecting motion by finding and tracking features or segments across different
+<<<<<<< HEAD
 images\cite{opticalflowtechniques}. Specifically, this involves measuring the
 motion of specific pixel brightness patterns in a sequence of images
 \cite{opticalflowtechniques}. Optical flow has many applications
@@ -80,6 +92,15 @@ in 3D vision tasks like obstacle avoidance and time-to-collision calculations
 useful in dynamic systems such as aerial vehicles, which can drift on the order
 of meters per second due to sensor noise, external perturbations, or control
 inputs.
+=======
+images. Specifically, this involves measuring the motion of specific pixel
+brightness patterns in a sequence of images. Optical flow has many applications
+in 3D vision tasks like obstacle avoidance and time-to-collision calculations.
+Performing such calculations at high speed is especially useful in dynamic
+systems such as aerial vehicles, which can drift on the order of meters per
+second due to sensor noise, external perturbations, or control inputs.
+A typical system setup is shown in Figure~\ref{fig:sys}.
+>>>>>>> 6ee927645a04c56a211357c83cc50b988d79ae63
 
 Optical flow can be sparse or dense. Sparse Optical Flow is the tracking of
 a few select pixels in a set of images. Dense Optical Flow is the tracking of
@@ -93,36 +114,37 @@ neighborhood, changing this parameter will produce different motion fields and
 will probably have an effect on the performance of the flow computation.
 
 We will specifically measure the number of frames processed per second using
-both platforms. We use OpenCV and its GPU acceleration compiler option to 
+both platforms. We use OpenCV and its GPU acceleration compiler option to
 implement this program.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{img/sys.png}
-  \caption{Test setup with Jetson devboard processing video stream as input and producing optical flow estimate as output.}
+  \caption{Typical setup with GPU processing video stream as input and producing optical flow estimate as output.}
   \label{fig:sys}
 \end{figure}
 
 \section{Hardware}
-The Nvidia Jetson TK1 development board used in this project is built around
-the Nvidia Tegra K1 SoC, which contains a Kepler-based GPU with 192 CUDA cores
-and a quad-core ARM Cortex-A15 processor.
+The Intel CPU and Nvidia GPU used in this project are both part of a U500VZ
+laptop. The Intel Core i7-3612QM is a quad-core processor built on the 22 nm
+Ivy Bridge architecture. The Nvidia GeForce GT 650M is a 28 nm Kepler-based GPU
+with 384 CUDA cores.
 
 \section{Testing Methodology}
-To test the criteria outlined above, we will create two programs to produce
-identical outputs, but one will target a CPU and the other a GPU. An example of
-the program's output is provided in Figure~\ref{fig:flow}.
+To test the criteria outlined above, we create two programs to produce
+identical outputs for the CPU and GPU. An example of the program's output is
+provided in Figure~\ref{fig:flow}.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.8\textwidth]{img/flow.png}
-  \caption{An example output image of our testing program.}
+  \caption{An example output image of our program. Blue line segments indicate optical flow.}
   \label{fig:flow}
 \end{figure}
 
-To try to identify strengths and weaknesses of each target, we will attempt to
+To identify strengths and weaknesses of each target, we attempt to
 introduce additional variables that may have an impact on performance. These
-variables will be:
+variables are:
 
 \begin{description}
   \item[Image resolution] To process a very small image, the overhead required
@@ -135,19 +157,13 @@ variables will be:
     see what this relationship looks like.
 \end{description}
 
-It is important to note that the processing times for the first few frames will
-be discarded to remove any caching oddities and to allow the GPU kernels to
-finish load.
-
 \section{Results}
-
 We first tested the CPU and GPU implementations with constant block size and
 various input resolutions (Figures~\ref{fig:cpures}, \ref{fig:gpures}). We then
 compared the two implementations given a constant resolution and various block
 sizes (Figures~\ref{fig:cpublock}, \ref{fig:gpublock}). Loading times of
 individual samples on the GPU at 640x480 resolution with block size of 13 is
 shown in Figure~\ref{fig:cudaload}.
-% TODO(kyle): Summarize results
 
 \begin{figure}[H]
   \centering
@@ -186,15 +202,15 @@ shown in Figure~\ref{fig:cudaload}.
 
 \section{Implementation Analysis}
 To provide more insight into why the GPU showed better performance results than
-the CPU, we will now break down the OpenCV Farneback optical flow implementation
+the CPU, we can break down the OpenCV Farneback optical flow implementation
 used in the trials. We use the \texttt{objdump} tool to disassemble the OpenCV
 shared library into an x86 assembly representation. We then use this assembly
 code to gather information on the types and counts of instructions being run.
 
 The heavy use of Streaming SIMD Extensions (SSE) makes it more difficult to
-reason about the number of floating point operations being performed. An example
-of how SIMD executes a single instruction on an array of data is shown in
-Figure~\ref{fig:simd}.
+reason about the number of floating point operations being performed. An
+example of how SIMD executes a single instruction on an array of data is shown
+in Figure~\ref{fig:simd}.
 
 \begin{figure}[h]
   \centering
@@ -206,60 +222,62 @@ Figure~\ref{fig:simd}.
 The heart of the OpenCV Farneback optical flow implementation is the
 \texttt{FarnebackPolyExp} function. While there are other operations that
 execute floating point operations, this function is the most expensive. The
-number of floating point operations in the core loop is given by:
+number of floating point operations in the core loop is given by the following:
 
 $$
 \text{FP Operations} = \text{levels} * \text{img\_width} * \text{img\_height}
                 * (12 + \text{poly\_n} * 17)
 $$
 
-For a 1920x1080 image with $\text{levels}=5$ and $\text{poly\_n}=5$, this results in
-1,005,696,000 floating point operations per frame. On top of this is several
-Gaussian blur operations, several image resizes, and lots of memory access and
-allocation.
+For a 1920x1080 image with $\text{levels}=5$ and $\text{poly\_n}=5$, this
+results in 1,005,696,000 floating point operations per frame. On top of this is
+several Gaussian blur operations, several image resizes, and lots of memory
+access and allocation.
 
 \section{Conclusion}
 Overall, the GPU performed better for all the different image resolutions and
 block sizes. The GPU performed about 2x faster for all different resolutions.
-It was interesting to note that the CPU processing times for varying block 
-sizes remained steady at about 220 ms while the GPU processing times 
+It was interesting to note that the CPU processing times for varying block
+sizes remained steady at about 220 ms while the GPU processing times
 increased steadily from about 50 ms to 150 ms when increasing the block size
-from about 5 to 21. This could be explained by the fact that a smaller block 
-size means more polyfit calculations that can be computed independently
-of the other blocks. The GPU is able to take more advantage of parallelism in
-this case while for larger block sizes, there are less polyfit calculations to 
-compute and thus less computation that can be executed in parallel. In the case
-of the CPU, the size of the block and the number of polyfit computations 
-seemed to even out and did not show a significant difference across multiple 
-block sizes. 
+from about 5 to 21. This could be explained by the fact that a smaller block
+size allows more polyfit calculations to be computed independently of the other
+blocks. The GPU is able to take more advantage of parallelism in this case
+while for larger block sizes, there are fewer polyfit calculations to compute
+and thus less computation that can be executed in parallel. In the case of the
+CPU, the size of the block and the number of polyfit computations seemed to
+even out and did not show a significant difference across multiple block sizes.
 
-Another interesting result is the variance of the processing times at each 
+Another interesting result is the variance of the processing times at each
 block size. The CPU processing times varied by about 20 ms across iterations at
-each block size while for the GPU, the variance was about 10 ms. This can be
-explained by the context switches executed by the Operating System (OS) running
-on the CPU. 
+each block size (Figure~\ref{fig:cpublock}) while for the GPU, the variance was
+about 10 ms (Figure~\ref{fig:gpublock}). This can be explained by the context
+switches executed by the operating system (OS) running on the CPU.
 
-The GPU computations contain outliers in figures 4 and 6. Note that the loading
-times are constant at about 400 ms for each resolution in figure 4. This is due
-to the GPU kernel loading time, the time it takes to copy the kernels, or the
-functions to be run on the GPU, to GPU memory. For each frame that the GPU 
-optical flow algorithm must process, it must 
+The GPU computations contain outliers in Figures~\ref{fig:gpures} and
+\ref{fig:gpublock}. Note that the loading times are constant at about 400 ms
+for each resolution in figure 4. This is due to the GPU kernel loading time,
+the time it takes to copy the kernels, or the functions to be run on the GPU,
+to GPU memory. For each frame that the GPU optical flow algorithm must process,
+it must:
+
 \begin{enumerate}
-    \item Load the kernels from CPU memory to GPU memory
-    \item Transfer the images from CPU to GPU
-    \item Perform the optical flow
+  \item Load the kernels from CPU memory to GPU memory
+  \item Transfer the images from CPU to GPU
+  \item Perform the optical flow
 \end{enumerate}
+
 Since the optical flow kernel is same for each optical flow calculation, the
-loading time is constant. The load only needs to be performed for the first 
-first frame processed. The GPU only performs steps 2 and 3 for subsequent 
+loading time is constant. The load only needs to be performed for the first
+first frame processed. The GPU only performs steps 2 and 3 for subsequent
 frames.
 
-Not surprisingly, the GPU outperformed the CPU for optical flow computations at
+Unsurprisingly, the GPU outperformed the CPU for optical flow computations at
 varying image resolutions and block sizes. To extend the work presented in this
 paper, it would be interesting to investigate a larger range of block sizes and
 image resolutions as well as more CPU and GPU platforms. It may also be useful
 to compare performance differences for different optical flow algorithms. 
-\section{References}
+
 \nocite{*}
 \bibliographystyle{plain-annote}
 \bibliography{paper}
