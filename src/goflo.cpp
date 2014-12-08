@@ -34,7 +34,9 @@ int main(int argc, char **argv) {
   }
 
   Benchmarker benchmarker(std::move(engine));
-  cv::VideoCapture capture(0);
+  cv::VideoCapture capture("vid.mp4");
+  //capture.set(CV_CAP_PROP_FRAME_WIDTH, 640 );
+  //capture.set(CV_CAP_PROP_FRAME_HEIGHT, 480 );
 
   if(!capture.isOpened()) {
     std::cerr << "Failed to open capture device" << std::endl;
