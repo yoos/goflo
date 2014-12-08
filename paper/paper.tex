@@ -139,38 +139,47 @@ finish load.
 
 \section{Results}
 
-First, we tested the CPU and GPU implementations on various input resolutions.
+We first tested the CPU and GPU implementations with constant block size and
+various input resolutions (Figures~\ref{fig:cpures}, \ref{fig:gpures}). We then
+compared the two implementations given a constant resolution and various block
+sizes (Figures~\ref{fig:cpublock}, \ref{fig:gpublock}). Loading times of
+individual samples on the GPU at 640x480 resolution with block size of 13 is
+shown in Figure~\ref{fig:cudaload}.
 % TODO(kyle): Summarize results
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{img/cpu_resolution.png}
-  \caption{CPU processing time per frame in milliseconds at various resolutions.}
+  \caption{CPU processing time per frame at block size of 13 and various resolutions.}
   \label{fig:cpures}
 \end{figure}
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{img/gpu_resolution.png}
-  \caption{GPU processing time per frame in milliseconds at various resolutions.}
+  \caption{GPU processing time per frame at block size of 13 and various resolutions.}
   \label{fig:gpures}
 \end{figure}
-
-We then compared the two implementations for various block sizes.
-% TODO(kyle): Summarize results
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{img/cpu_blocksize.png}
-  \caption{CPU processing time per frame in milliseconds at various block sizes.}
+  \caption{CPU processing time per frame at 640x480 resolution and various block sizes.}
   \label{fig:cpublock}
 \end{figure}
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.8\textwidth]{img/gpu_blocksize.png}
-  \caption{GPU processing time per frame in milliseconds at various block sizes.}
+  \caption{GPU processing time per frame at 640x480 resolution and various block sizes.}
   \label{fig:gpublock}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.8\textwidth]{img/cudaloading.png}
+  \caption{GPU processing time for 50 samples at 640x480 resolution and block size of 13.}
+  \label{fig:cudaload}
 \end{figure}
 
 \section{Implementation Analysis}
