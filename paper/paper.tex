@@ -51,10 +51,10 @@
 
 \section{Abstract}
 GPUs, or graphical processing units, have been shown to provide a significant
-performance boost over CPUs for highly parallel tasks. This project
-investigates the performance difference between optical flow algorithms run on
-an Intel Core i5 quad core CPU and those run on an NVIDIA Tegra K1 SoC. We
-expected the K1 to run these optical flow algorithms significantly faster due
+performance boost over CPUs for highly parallel tasks\cite{gpupipeline}. This
+project investigates the performance difference between optical flow algorithms
+run on an Intel Core i5 quad core CPU and those run on an NVIDIA Tegra K1 SoC.
+We expected the K1 to run these optical flow algorithms significantly faster due
 to its ability to parallelize with its GPU. We expect to test the performance
 on the Farneback dense optical flow algorithm. This algorithm will process
 video frames captured by a GoPro webcam with a USB interface. The performance
@@ -65,19 +65,21 @@ GPUs have been used to improve the performance of a variety of different
 applications. While CPUs consist of a few powerful cores optimized for serial
 processing, GPUs have a massively parallel architecture consisting of many
 smaller, more efficient cores designed for handling multiple tasks
-simultaneously. We expect the optical flow program to run many orders of
-magnitude faster on a GPU than on a CPU, as it can process more arrays of
-pixels simultaneously.
+simultaneously\cite{gpuoverview}. We expect the optical flow program to run many
+orders of magnitude faster on a GPU than on a CPU, as it can process more arrays
+of pixels simultaneously.
 
 \section{Optical Flow}
 Optical flow is a problem within the field of Computer Vision concerned with
 detecting motion by finding and tracking features or segments across different
-images. Specifically, this involves measuring the motion of specific pixel
-brightness patterns in a sequence of images. Optical flow has many applications
-in 3D vision tasks like obstacle avoidance and time-to-collision calculations.
-Performing such calculations at high speed is especially useful in dynamic
-systems such as aerial vehicles, which can drift on the order of meters per
-second due to sensor noise, external perturbations, or control inputs.
+images\cite{opticalflowtechniques}. Specifically, this involves measuring the
+motion of specific pixel brightness patterns in a sequence of images
+\cite{opticalflowtechniques}. Optical flow has many applications
+in 3D vision tasks like obstacle avoidance and time-to-collision calculations
+\cite{opticalflowgpu}. Performing such calculations at high speed is especially
+useful in dynamic systems such as aerial vehicles, which can drift on the order
+of meters per second due to sensor noise, external perturbations, or control
+inputs.
 
 Optical flow can be sparse or dense. Sparse Optical Flow is the tracking of
 a few select pixels in a set of images. Dense Optical Flow is the tracking of
@@ -86,9 +88,9 @@ all pixels in a set of images, a much more computationally intensive task.
 In this project, we use the Farneback Dense Optical Flow Algorithm, which
 computes a polynomial expansion for a neighborhood of pixels and from that
 polynomial approximation, computes displacement (or motion) fields using linear
-algebra. Since the motion fields depend on the size of the neighborhood,
-changing this parameter will produce different motion fields and will probably
-have an effect on the performance of the flow computation.
+algebra\cite{farneback}. Since the motion fields depend on the size of the
+neighborhood, changing this parameter will produce different motion fields and
+will probably have an effect on the performance of the flow computation.
 
 We will specifically measure the number of frames processed per second using
 both platforms. We use OpenCV and its GPU acceleration compiler option to 
